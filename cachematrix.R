@@ -24,7 +24,25 @@ cacheSolve <- function(x, ...) {
     return(i)
   }
   data <- x$get()
+  message("calculating the inverse matrix of:")
+  print(data)
   i <- solve(data)
   x$setcm(i)
+  message("caching the result")
   i
+}
+
+##check if everything is fine with a matrix multiplication between the original and its cached inverse
+checkCache  <- function(x, ...) {
+  o <- x$get()
+  i <- x$getcm()
+  if(is.null(i)){
+    stop("Inverse matrix not yet cached, run cacheSolve first")
+  }
+  else
+  {
+    ##rounding the proof matrix to show Ones and Zeroes only
+    elegant_proof <- round(o %*% i)
+    elegant_proof
+  }
 }
